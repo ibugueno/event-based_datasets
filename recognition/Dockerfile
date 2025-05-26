@@ -28,7 +28,7 @@ SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
 COPY requirements.txt /tmp/requirements.txt
 
 # Instalar las librerías de Python requeridas desde el requirements.txt
-RUN pip install -r /tmp/requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
+RUN pip install -r /tmp/requirements.txt
 
 # Set the working directory to /app
 WORKDIR /app
@@ -36,6 +36,6 @@ WORKDIR /app
 # Configurar el entorno por defecto en bash
 RUN echo "source /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
     echo "conda activate myenv" >> ~/.bashrc
-    
-# Comando por defecto (puedes cambiarlo si es necesario)
+
+# Comando por defecto
 CMD ["bash"]
