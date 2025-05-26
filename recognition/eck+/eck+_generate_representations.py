@@ -161,7 +161,7 @@ if __name__ == "__main__":
     TBR_BINS = 8
     TIME_WINDOW = np.uint64(100_000)   # 100 ms en µs
     OFFSET_TIME_WINDOW = np.uint64(10_000)  # 50 ms en µs
-    INPUT_DIR = args.input_dir + "ddbb_cropped/e-ck+_346_full_cropped_events_100ms"
+    INPUT_DIR = args.input_dir + "e-ck+_346_full_cropped_events_100ms"
     OUTPUT_DIR = args.output_dir + f"e-ck+_rep_{int(TIME_WINDOW / 1000)}ms"
     REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
 
