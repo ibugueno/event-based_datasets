@@ -1,0 +1,3 @@
+paths:
+  input_root: "../../../raw_data/recognition/"
+  output_root: "../../../processed_data/recognition/"
