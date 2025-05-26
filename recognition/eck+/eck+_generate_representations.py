@@ -145,15 +145,16 @@ def process_all():
                                 save_image(padded, out_path)
 
 if __name__ == "__main__":
-    with open("../config.yaml", "r") as f:
+
+    with open("../config_dgx-1.yaml", "r") as f:
         config = yaml.safe_load(f)
 
     INPUT_ROOT = config["paths"]["input_root"]
     OUTPUT_ROOT = config["paths"]["output_root"]
 
     parser = argparse.ArgumentParser(description="E-CK+ representation generator")
-    parser.add_argument("--input-dir", type=str, default=f"{INPUT_ROOT}/eck+/", help="Path to the cropped event files (.npy)")
-    parser.add_argument("--output-dir", type=str, default=f"{OUTPUT_ROOT}/eck+/", help="Path where to save the representations")
+    parser.add_argument("--input-dir", type=str, default=f"{INPUT_ROOT}", help="Path to the cropped event files (.npy)")
+    parser.add_argument("--output-dir", type=str, default=f"{OUTPUT_ROOT}", help="Path where to save the representations")
     args = parser.parse_args()
 
     IMG_SIZE = (260, 260)

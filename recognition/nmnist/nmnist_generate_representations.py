@@ -137,15 +137,15 @@ def main():
 # === Parámetros ===
 if __name__ == "__main__":
 
-    with open("../config.yaml", "r") as f:
+    with open("../config_dgx-1.yaml", "r") as f:
         config = yaml.safe_load(f)
 
     INPUT_ROOT = config["paths"]["input_root"]
     OUTPUT_ROOT = config["paths"]["output_root"]
 
     parser = argparse.ArgumentParser(description="N-MNIST representation generator")
-    parser.add_argument("--input-dir", type=str, default=f"{INPUT_ROOT}/nmnist/", help="Path to input dir")
-    parser.add_argument("--output-dir", type=str, default=f"{OUTPUT_ROOT}/nmnist/", help="Path to output dir")
+    parser.add_argument("--input-dir", type=str, default=f"{INPUT_ROOT}", help="Path to input dir")
+    parser.add_argument("--output-dir", type=str, default=f"{OUTPUT_ROOT}", help="Path to output dir")
     args = parser.parse_args()
 
     IMG_SIZE = (34, 34)

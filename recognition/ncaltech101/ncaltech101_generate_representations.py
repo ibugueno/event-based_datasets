@@ -256,7 +256,7 @@ def main():
 
 if __name__ == "__main__":
 
-    with open("../config.yaml", "r") as f:
+    with open("../config_dgx-1.yaml", "r") as f:
         config = yaml.safe_load(f)
 
     INPUT_ROOT = config["paths"]["input_root"]
@@ -267,13 +267,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--input-dir",
         type=str,
-        default=f"{INPUT_ROOT}/ncaltech101/",
+        default=f"{INPUT_ROOT}",
         help="Path to the input directory (.bin files)"
     )
     parser.add_argument(
         "--output-dir",
         type=str,
-        default=f"{OUTPUT_ROOT}/ncaltech101/",
+        default=f"{OUTPUT_ROOT}",
         help="Path to the directory where to save the representations"
     )
 
