@@ -178,10 +178,10 @@ def main():
                             save_image(img, out_path)
                         elif rep == "tbr_tensor":
                             tensor = make_tbr_tensor(events, IMG_SIZE, IMG_SIZE, TBR_BINS, rescale=False)
-                            # np.save(os.path.join(rep_dir, f"{fname}.npy"), tensor)
+                            np.save(os.path.join(rep_dir, f"{fname}.npy"), tensor)
                         elif rep == "tqr_tensor":
                             tensor = make_tqr_tensor(events, IMG_SIZE, IMG_SIZE, TBR_BINS, rescale=False)
-                            # np.save(os.path.join(rep_dir, f"{fname}.npy"), tensor)
+                            np.save(os.path.join(rep_dir, f"{fname}.npy"), tensor)
                         elif rep == "tencode":
                             img = make_tencode(events, IMG_SIZE)
                             save_color_image(img, out_path)
