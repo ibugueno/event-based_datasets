@@ -131,9 +131,9 @@ def main():
         n = len(bin_files)
         split_counts = {
             "train": int(SPLIT_RATIO["train"] * n),
-            "val": int(SPLIT_RATIO["val"] * n),
-            "test": n - int(SPLIT_RATIO["train"] * n) - int(SPLIT_RATIO["val"] * n)
         }
+        split_counts["test"] = n - split_counts["train"]
+
 
         idx = 0
         for split, count in split_counts.items():
@@ -288,7 +288,7 @@ if __name__ == "__main__":
     ANNOTATION_DIR = args.input_dir + "ncaltech101_bin/Caltech101_annotations"
     OUTPUT_DIR = args.output_dir + f"ncaltech101_rep_{str(int(TIME_WINDOW/1e3))}ms"
     REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
-    SPLIT_RATIO = {"train": 0.8, "val": 0.1, "test": 0.1}
+    SPLIT_RATIO = {"train": 0.8, "test": 0.2}
 
     main()
 
