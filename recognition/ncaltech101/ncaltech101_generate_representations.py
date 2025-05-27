@@ -125,14 +125,22 @@ def main():
     valid_samples = 0
 
 
-    for class_name in sorted(os.listdir(INPUT_DIR)):
+    for class_name in ["garfield"]:
         bin_files = sorted(glob.glob(os.path.join(INPUT_DIR, class_name, "*.bin")))
         random.shuffle(bin_files)
         n = len(bin_files)
+        if n < 2:
+            continue  # saltar si no hay al menos 2 muestras
+
         split_counts = {
-            "train": int(SPLIT_RATIO["train"] * n),
+            "train": max(1, int(SPLIT_RATIO["train"] * n)),
         }
         split_counts["test"] = n - split_counts["train"]
+
+        # Ajuste si la suma no da n
+        if split_counts["test"] == 0:
+            split_counts["train"] -= 1
+            split_counts["test"] += 1
 
 
         idx = 0
