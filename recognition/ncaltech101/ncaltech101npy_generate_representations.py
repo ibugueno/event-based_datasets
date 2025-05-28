@@ -156,15 +156,6 @@ def main():
                     t_max = np.max(events[:, 2])
                     duration = t_max - t_min
 
-                    #print(duration)
-
-                    #print("OFFSET_TIME_WINDOW: ", OFFSET_TIME_WINDOW)
-                    #print("TIME_WINDOW: ", TIME_WINDOW)
-                    #print("t_min, t_max: ", t_min, t_max)
-                    #print("t_min, t_max, step: ", t_min, t_max, step)
-                    #print("start_times: ", start_times)
-                    #print("duration: ", duration)
-
                     if duration < TIME_WINDOW:
                         continue
 
