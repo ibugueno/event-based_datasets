@@ -124,7 +124,7 @@ def main():
     total_duration = 0
     valid_samples = 0
 
-    for split in ["train", "val", "test"]:
+    for split in ["training", "validation", "testing"]:
         split_dir = os.path.join(INPUT_DIR, split)
         print(f"\nProcesando split: {split}")
 
@@ -192,12 +192,6 @@ def main():
                             out_path = os.path.join(rep_dir, f"{tag}.png")
 
                             if rep == "event_accumulate":
-                                #print(f"[DEBUG] {tag}: window_events.shape = {window_events.shape}")
-                                #print(f"[DEBUG] {tag}: x dtype = {window_events[:,0].dtype}, y dtype = {window_events[:,1].dtype}")
-                                #print(f"[DEBUG] {tag}: valores únicos de x = {np.unique(window_events[:,0].astype(int))[:5]}")
-                                #print(f"[DEBUG] {tag}: valores únicos de y = {np.unique(window_events[:,1].astype(int))[:5]}")
-
-
                                 img = make_event_accumulate(window_events, img_size=(180, 240))
 
                             elif rep == "sae":
@@ -210,7 +204,7 @@ def main():
                                 tensor = make_tbr_tensor(
                                     window_events,
                                     original_size=(180, 240),
-                                    final_size=(180, 240),  # resolución cuadrada antes del resize final
+                                    final_size=(180, 240),  
                                     num_bins=TBR_BINS,
                                     rescale=False
                                 )
