@@ -1,3 +1,3 @@
 paths:
-  input_root: "../../../input/recognition"
-  output_root: "../../../output/recognition"
+  input_root: "../../../input/recognition/"
+  output_root: "../../../output/recognition/"

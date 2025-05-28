@@ -125,7 +125,7 @@ def main():
     valid_samples = 0
 
 
-    for class_name in ["garfield"]:
+    for class_name in sorted(os.listdir(INPUT_DIR)):
         bin_files = sorted(glob.glob(os.path.join(INPUT_DIR, class_name, "*.bin")))
         random.shuffle(bin_files)
         n = len(bin_files)
