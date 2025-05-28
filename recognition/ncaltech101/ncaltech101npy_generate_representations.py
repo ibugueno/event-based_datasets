@@ -278,7 +278,7 @@ if __name__ == "__main__":
     IMG_SIZE = (224, 224) #(180, 240)
     TBR_BINS = 16
     TIME_WINDOW = np.uint64(100_000)  # en microsegundos
-    OFFSET_TIME_WINDOW = np.uint64(25_000)  # en microsegundos
+    OFFSET_TIME_WINDOW = np.uint64(0)#np.uint64(25_000)  # en microsegundos
     INPUT_DIR = args.input_dir + "N-Caltech101"
     OUTPUT_DIR = args.output_dir + f"ncaltech101npy_rep_{str(int(TIME_WINDOW/1e3))}ms"
     REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
