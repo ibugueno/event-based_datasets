@@ -177,7 +177,7 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", type=str, default=f"{OUTPUT_ROOT}", help="Path where to save the representations")
     args = parser.parse_args()
 
-    IMG_SIZE = (200, 200)
+    IMG_SIZE = (192, 192)
     TBR_BINS = 8
     TIME_WINDOW = np.uint64(100_000)   # 100 ms en µs
     OFFSET_TIME_WINDOW = np.uint64(5_000)  # 5 ms en µs
