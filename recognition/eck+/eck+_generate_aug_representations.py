@@ -57,6 +57,15 @@ def pad_to_square(img, rep):
     # Redimensionar a tamaño final
     return np.array(Image.fromarray(padded).resize(IMG_SIZE, Image.BILINEAR))
 
+def flip_tensor(tensor, rep):
+    if rep == "tbr_tensor" and tensor.ndim == 3:
+        return tensor[:, ::-1, :]  # (H, W, BINS)
+    elif rep == "tqr_tensor" and tensor.ndim == 4:
+        return tensor[:, ::-1, :, :]  # (H, W, BINS, 2)
+    else:
+        raise ValueError(f"[ERROR] Forma de tensor no soportada para {rep}: {tensor.shape}")
+
+
 def process_all():
     for split in ['Train_Set', 'Test_Set']:
         print(f"\nProcesando {split}...")
@@ -104,8 +113,6 @@ def process_all():
 
                     window_events = np.stack([x, y, t, p], axis=-1)
 
-                    #print(window_events)
-
                     if len(window_events) < 2:
                         continue
 
@@ -114,7 +121,9 @@ def process_all():
                     for rep in REPRESENTATIONS:
                         rep_dir = os.path.join(OUTPUT_DIR, rep, split, class_id)
                         os.makedirs(rep_dir, exist_ok=True)
+
                         out_path = os.path.join(rep_dir, f"{tag}.png")
+                        out_path_flip = os.path.join(rep_dir, f"{tag}_flip.png")
 
                         if rep == "event_accumulate":
                             img = make_event_accumulate(window_events, crop_size)
@@ -125,10 +134,14 @@ def process_all():
                         elif rep == "tbr_tensor":
                             tensor = make_tbr_tensor(window_events, crop_size, IMG_SIZE, TBR_BINS, rescale=True)
                             np.save(os.path.join(rep_dir, f"{tag}.npy"), tensor)
+                            flipped_tensor = flip_tensor(tensor, rep)
+                            np.save(os.path.join(rep_dir, f"{tag}_flip.npy"), flipped_tensor)
                             img = None
                         elif rep == "tqr_tensor":
                             tensor = make_tqr_tensor(window_events, crop_size, IMG_SIZE, TBR_BINS, rescale=True)
                             np.save(os.path.join(rep_dir, f"{tag}.npy"), tensor)
+                            flipped_tensor = flip_tensor(tensor, rep)
+                            np.save(os.path.join(rep_dir, f"{tag}_flip.npy"), flipped_tensor)
                             img = None
                         elif rep == "tencode":
                             img = make_tencode(window_events, crop_size)
@@ -137,12 +150,19 @@ def process_all():
                         else:
                             img = None
 
+                        # Guardar imágenes (y sus versiones reflejadas)
                         if img is not None:
                             padded = pad_to_square(img, rep)
+                            flipped = np.fliplr(padded)
+
                             if padded.ndim == 3:
                                 save_color_image(padded, out_path)
+                                save_color_image(flipped, out_path_flip)
                             else:
                                 save_image(padded, out_path)
+                                save_image(flipped, out_path_flip)
+
+
 
 if __name__ == "__main__":
 
