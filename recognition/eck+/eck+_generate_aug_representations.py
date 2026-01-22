@@ -195,8 +195,12 @@ if __name__ == "__main__":
     if TIME_WINDOW == 0:
         raise ValueError("--timewindow-ms must be > 0")
 
-    INPUT_DIR = args.input_dir + "e-ck+_346_full_cropped_events_100ms"
-    OUTPUT_DIR = args.output_dir + f"eck+_rep_{int(TIME_WINDOW / 1000)}ms"
+    INPUT_DIR = os.path.join(args.input_dir, "e-ck+_346_full_cropped_events_100ms")
+
+    OUTPUT_DIR = os.path.join(
+        args.output_dir,
+        f"eck+_rep_tw{int(TIME_WINDOW/1000)}ms_off{int(OFFSET_TIME_WINDOW/1000)}ms"
+    )
 
     #REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
     REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
