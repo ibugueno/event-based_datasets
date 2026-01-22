@@ -124,13 +124,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="DVS128 Gesture representation generator")
     parser.add_argument("--input-dir", type=str, default=f"{INPUT_ROOT}", help="Path to input dir")
     parser.add_argument("--output-dir", type=str, default=f"{OUTPUT_ROOT}", help="Path to output dir")
+    parser.add_argument("--timewindow-ms", type=int, default=100, help="Window size in ms (default: 100)")
+
     args = parser.parse_args()
 
     IMG_SIZE = (128, 128)
     TBR_BINS = 8
-    TIME_WINDOW = np.uint64(100_000)  # 100 ms
+    TIME_WINDOW = np.uint64(args.timewindow_ms * 1_000) # ms -> us     
+    
     INPUT_DIR = os.path.join(args.input_dir, "dvsgesture_npy")
     OUTPUT_DIR = os.path.join(args.output_dir, f"dvsgesture_rep_{int(TIME_WINDOW/1e3)}ms")
-    REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
+    
+    #REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
+    REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
 
     main()

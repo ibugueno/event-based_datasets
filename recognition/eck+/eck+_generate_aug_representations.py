@@ -175,14 +175,30 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="E-CK+ representation generator")
     parser.add_argument("--input-dir", type=str, default=f"{INPUT_ROOT}", help="Path to the cropped event files (.npy)")
     parser.add_argument("--output-dir", type=str, default=f"{OUTPUT_ROOT}", help="Path where to save the representations")
+
+    parser.add_argument("--timewindow-ms", type=int, default=100,
+                        help="Time window size in ms (converted internally to µs). Default: 100")
+    parser.add_argument("--offset-ms", type=int, default=5,
+                        help="Offset/stride between windows in ms (converted internally to µs). Default: 5")
+
     args = parser.parse_args()
 
     IMG_SIZE = (192, 192)
     TBR_BINS = 8
-    TIME_WINDOW = np.uint64(100_000)   # 100 ms en µs
-    OFFSET_TIME_WINDOW = np.uint64(5_000)  # 5 ms en µs
+
+    # ms -> µs
+    TIME_WINDOW = np.uint64(args.timewindow_ms * 1_000)
+    OFFSET_TIME_WINDOW = np.uint64(args.offset_ms * 1_000)
+
+    if OFFSET_TIME_WINDOW == 0:
+        raise ValueError("--offset-ms must be > 0")
+    if TIME_WINDOW == 0:
+        raise ValueError("--timewindow-ms must be > 0")
+
     INPUT_DIR = args.input_dir + "e-ck+_346_full_cropped_events_100ms"
     OUTPUT_DIR = args.output_dir + f"eck+_rep_{int(TIME_WINDOW / 1000)}ms"
-    REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
+
+    #REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
+    REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
 
     process_all()
