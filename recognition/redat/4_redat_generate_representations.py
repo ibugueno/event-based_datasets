@@ -7,6 +7,7 @@ import glob
 import sys
 import argparse
 import yaml
+import traceback
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -171,8 +172,8 @@ def process_file(file_path, split, label):
 
                     tensor = make_tbr_tensor(
                         window_events,
-                        IMG_SIZE[0],
-                        IMG_SIZE[1],
+                        IMG_SIZE,
+                        IMG_SIZE,
                         TBR_BINS,
                         rescale=False
                     )
@@ -186,8 +187,8 @@ def process_file(file_path, split, label):
 
                     tensor = make_tqr_tensor(
                         window_events,
-                        IMG_SIZE[0],
-                        IMG_SIZE[1],
+                        IMG_SIZE,
+                        IMG_SIZE,
                         TBR_BINS,
                         rescale=False
                     )
@@ -216,8 +217,8 @@ def process_file(file_path, split, label):
                     save_image(img, out_path)
 
     except Exception as e:
-
-        print(f"[ERROR] {file_path}: {e}")
+        print(f"\n[ERROR] {file_path}: {e}")
+        traceback.print_exc()
 
 
 def main():
@@ -288,7 +289,7 @@ if __name__ == "__main__":
     print(f'OUTPUT_DIR: {OUTPUT_DIR}')
 
     #REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
-    REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
-    #REPRESENTATIONS = ["event_accumulate"]
+    #REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
+    REPRESENTATIONS = ["tqr_tensor"]
 
     main()
