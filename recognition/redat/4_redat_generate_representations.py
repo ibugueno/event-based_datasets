@@ -285,7 +285,6 @@ if __name__ == "__main__":
     ]
 
     #REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
-    #REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
-    REPRESENTATIONS = ["event_accumulate"]
+    REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
 
     main()
