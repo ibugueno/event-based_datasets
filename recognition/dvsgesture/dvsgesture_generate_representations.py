@@ -136,6 +136,7 @@ if __name__ == "__main__":
     OUTPUT_DIR = os.path.join(args.output_dir, f"dvsgesture_rep_{int(TIME_WINDOW/1e3)}ms")
     
     #REPRESENTATIONS = ["event_accumulate", "sae", "tbr", "tbr_tensor", "tqr_tensor", "tencode", "behi"]
-    REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
+    #REPRESENTATIONS = ["event_accumulate", "tbr", "tbr_tensor", "tqr_tensor", "tencode"]
+    REPRESENTATIONS = ["sae", "behi"]
 
     main()
