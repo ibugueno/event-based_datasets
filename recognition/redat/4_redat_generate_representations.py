@@ -28,6 +28,38 @@ def save_image(array, path):
 def save_color_image(array, path):
     Image.fromarray(array).save(path)
 
+def pad_to_size(array, target_size=(192, 240)):
+
+    target_h, target_w = target_size
+    h, w = array.shape[:2]
+
+    pad_h = target_h - h
+    pad_w = target_w - w
+
+    if pad_h < 0 or pad_w < 0:
+        raise ValueError(f"Target size {target_size} smaller than array size {(h, w)}")
+
+    pad_top = pad_h // 2
+    pad_bottom = pad_h - pad_top
+
+    pad_left = pad_w // 2
+    pad_right = pad_w - pad_left
+
+    pad_config = [
+        (pad_top, pad_bottom),
+        (pad_left, pad_right)
+    ]
+
+    for _ in array.shape[2:]:
+        pad_config.append((0, 0))
+
+    return np.pad(
+        array,
+        pad_config,
+        mode="constant",
+        constant_values=0
+    )
+
 def save_dataset_config():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -147,6 +179,8 @@ def process_file(file_path, split, label):
                         IMG_SIZE
                     )
 
+                    img = pad_to_size(img, PADDED_IMG_SIZE)
+
                     save_image(img, out_path)
 
                 elif rep == "sae":
@@ -155,6 +189,8 @@ def process_file(file_path, split, label):
                         window_events,
                         IMG_SIZE
                     )
+
+                    img = pad_to_size(img, PADDED_IMG_SIZE)
 
                     save_image(img, out_path)
 
@@ -166,6 +202,8 @@ def process_file(file_path, split, label):
                         TBR_BINS
                     )
 
+                    img = pad_to_size(img, PADDED_IMG_SIZE)
+
                     save_image(img, out_path)
 
                 elif rep == "tbr_tensor":
@@ -176,6 +214,11 @@ def process_file(file_path, split, label):
                         IMG_SIZE,
                         TBR_BINS,
                         rescale=False
+                    )
+
+                    tensor = pad_to_size(
+                        tensor,
+                        PADDED_IMG_SIZE
                     )
 
                     np.save(
@@ -193,6 +236,11 @@ def process_file(file_path, split, label):
                         rescale=False
                     )
 
+                    tensor = pad_to_size(
+                        tensor,
+                        PADDED_IMG_SIZE
+                    )
+
                     np.save(
                         os.path.join(rep_dir, f"{tag}.npy"),
                         tensor
@@ -204,6 +252,8 @@ def process_file(file_path, split, label):
                         window_events,
                         IMG_SIZE
                     )
+                    
+                    img = pad_to_size(img, PADDED_IMG_SIZE)
 
                     save_color_image(img, out_path)
 
@@ -213,6 +263,8 @@ def process_file(file_path, split, label):
                         window_events,
                         IMG_SIZE
                     )
+
+                    img = pad_to_size(img, PADDED_IMG_SIZE)
 
                     save_image(img, out_path)
 
@@ -273,6 +325,8 @@ if __name__ == "__main__":
     width, height = 240, 180
 
     IMG_SIZE = (height, width)
+    PADDED_IMG_SIZE = (192, 240)
+
     TBR_BINS = 8
     TIME_WINDOW = np.uint64(args.timewindow_ms * 1_000)
     INPUT_DIR = os.path.join(args.input_dir, "redat24_npy_split")
